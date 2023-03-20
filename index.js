@@ -135,6 +135,15 @@
     if (event.key === "ArrowLeft" && (left > positionLeft)) {
       pilot.style.left = `${left - autoWidth}px`;
     }
+
+    if (event.key === "ArrowUp") {
+      delta = 10;
+    }
+  };
+  const handleKeyup = (event) => {
+    if (event.key === "ArrowUp") {
+      delta = 1;
+    }
   };
   const handleClick = (event) => {
     if (event.target.id === "start") {
@@ -148,6 +157,7 @@
   };
 
   document.addEventListener("keydown", handleKeydown);
+  document.addEventListener("keyup", handleKeyup);
   buttonElement.addEventListener("click", handleClick);
 
   reset();

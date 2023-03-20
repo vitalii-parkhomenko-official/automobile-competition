@@ -12,21 +12,34 @@
   const pilotLeft = positionCenter;
   const pilotTop = rect.height - autoHeight;
   const pilotImage = "./1-pilot.png";
+  const createAuto = (left, top, img) => {
+    const element = document.createElement("div");
 
-  const pilot = document.createElement("div");
+    element.style.top = `${top}px`;
+    element.style.left = `${left}px`;
+    element.style.backgroundImage = `url(${img})`;
+    element.setAttribute("class", "auto");
 
-  pilot.style.top = `${pilotTop}px`;
-  pilot.style.left = `${pilotLeft}px`;
-  pilot.style.backgroundImage = `url(${pilotImage})`;
-  pilot.setAttribute("class", "auto");
+    return element;
+  };
 
-  const auto = document.createElement("div");
-
-  auto.style.top = `${autoPositionY}px`;
-  auto.style.left = `${autoPositionX}px`;
-  auto.style.backgroundImage = `url(${autoImage})`;
-  auto.setAttribute("class", "auto");
+  const pilot = createAuto(pilotLeft, pilotTop, pilotImage);
+  const auto = createAuto(autoPositionX, autoPositionY, autoImage);
 
   screenElement.append(pilot);
   screenElement.append(auto);
+
+  const handleKeydown = (event) => {
+    const left = parseFloat(pilot.style.left);
+
+    if (event.key === "ArrowRight" && (left < positionRight)) {
+      pilot.style.left = `${left + autoWidth}px`;
+    }
+
+    if (event.key === "ArrowLeft" && (left > positionLeft)) {
+      pilot.style.left = `${left - autoWidth}px`;
+    }
+  };
+
+  document.addEventListener("keydown", handleKeydown);
 }

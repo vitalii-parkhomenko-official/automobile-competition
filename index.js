@@ -1,5 +1,6 @@
 {
   const screenElement = document.querySelector(".screen");
+  const scoresElement = document.querySelector(".scores > span");
   const buttonElement = document.querySelector(".buttons");
   const rect = screenElement.getBoundingClientRect();
   const autoWidth = rect.width / 3;
@@ -16,6 +17,12 @@
     [positionLeft, positionRight]
   ];
   const autoPositionY = -autoHeight;
+  const autoPositionsY = [
+    autoPositionY,
+    autoPositionY * 1.5,
+    autoPositionY * 2,
+    autoPositionY * 2.5,
+  ];
   const autoImages = [
     "./2-auto.png",
     "./3-auto.png",
@@ -38,7 +45,7 @@
 
     return element;
   };
-  const getAutos = () => randomInArray(autoPositionX).map(positionX => createAuto(positionX, autoPositionY, randomInArray(autoImages)));
+  const getAutos = () => randomInArray(autoPositionX).map(positionX => createAuto(positionX, randomInArray(autoPositionsY), randomInArray(autoImages)));
   let stage = 0;
   let delta = 1;
   let interval = null;
@@ -50,6 +57,9 @@
       const autoTop = parseFloat(auto.style.top);
 
       if (autoTop >= rect.height) {
+        scoresElement.innerHTML = (parseInt(scoresElement.innerHTML, 10) + 100).toString();
+        stage += 0.0005;
+
         const index = autos.indexOf(auto);
 
         auto.remove();
@@ -76,6 +86,8 @@
 
     stage = 0;
     interval = null;
+
+    scoresElement.innerHTML = '0';
   };
   const start = () => {
     interval = setInterval(animate, 10);

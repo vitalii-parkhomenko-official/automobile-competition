@@ -1,5 +1,6 @@
 {
   const screenElement = document.querySelector(".screen");
+  const buttonElement = document.querySelector(".buttons");
   const rect = screenElement.getBoundingClientRect();
   const autoWidth = rect.width / 3;
   const autoHeight = rect.height / 4;
@@ -24,14 +25,11 @@
   };
   let stage = 0;
   let delta = 1;
+  let interval = null;
+  let auto = createAuto(autoPositionX, autoPositionY, autoImage);
+  let pilot = createAuto(pilotLeft, pilotTop, pilotImage);
 
-  const pilot = createAuto(pilotLeft, pilotTop, pilotImage);
-  const auto = createAuto(autoPositionX, autoPositionY, autoImage);
-
-  screenElement.append(pilot);
-  screenElement.append(auto);
-
-  const animateAuto = () => {
+  const animate = () => {
     const autoTop = parseFloat(auto.style.top);
 
     if (autoTop >= rect.height) {
@@ -40,9 +38,22 @@
       auto.style.top = `${autoTop + (stage + delta)}px`;
     }
   };
+  const reset = () => {
+    clearInterval(interval);
+    pilot.remove();
+    pilot = createAuto(pilotLeft, pilotTop, pilotImage);
+    screenElement.append(pilot);
 
-  setInterval(animateAuto, 10);
+    auto.remove();
+    auto = createAuto(autoPositionX, autoPositionY, autoImage);
+    screenElement.append(auto);
 
+    stage = 0;
+    interval = null;
+  };
+  const start = () => {
+    interval = setInterval(animate, 10);
+  };
   const handleKeydown = (event) => {
     const left = parseFloat(pilot.style.left);
 
@@ -54,6 +65,19 @@
       pilot.style.left = `${left - autoWidth}px`;
     }
   };
+  const handleClick = (event) => {
+    if (event.target.id === "start") {
+      reset();
+      start();
+    }
+
+    if (event.target.id === "reset") {
+      reset();
+    }
+  };
 
   document.addEventListener("keydown", handleKeydown);
+  buttonElement.addEventListener("click", handleClick);
+
+  reset();
 }

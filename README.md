@@ -5,3 +5,4 @@
 - `part-2` - create a player/pilot and auto
 - `part-3` - add move pilot to left/right
 - `part-4` - add move auto to down and remove auto if out of screen
+- `part-5` - add start and reset buttons

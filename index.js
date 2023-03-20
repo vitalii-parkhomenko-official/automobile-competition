@@ -7,12 +7,24 @@
   const positionLeft = 0;
   const positionCenter = autoWidth;
   const positionRight = autoWidth + autoWidth;
-  const autoPositionX = positionLeft; // positionCenter, positionRight
-  const autoPositionY = 0;
-  const autoImage = "./2-auto.png";
+  const autoPositionX = [
+    positionLeft,
+    positionCenter,
+    positionRight
+  ];
+  const autoPositionY = -autoHeight;
+  const autoImages = [
+    "./2-auto.png",
+    "./3-auto.png",
+    "./4-auto.png",
+    "./5-auto.png",
+    "./6-auto.png",
+    "./7-auto.png",
+  ];
   const pilotLeft = positionCenter;
   const pilotTop = rect.height - autoHeight;
   const pilotImage = "./1-pilot.png";
+  const randomInArray = (array) => array[Math.floor(Math.random() * array.length)];
   const createAuto = (left, top, img) => {
     const element = document.createElement("div");
 
@@ -26,7 +38,7 @@
   let stage = 0;
   let delta = 1;
   let interval = null;
-  let auto = createAuto(autoPositionX, autoPositionY, autoImage);
+  let auto = createAuto(randomInArray(autoPositionX), autoPositionY, randomInArray(autoImages));
   let pilot = createAuto(pilotLeft, pilotTop, pilotImage);
 
   const animate = () => {
@@ -45,7 +57,7 @@
     screenElement.append(pilot);
 
     auto.remove();
-    auto = createAuto(autoPositionX, autoPositionY, autoImage);
+    auto = createAuto(randomInArray(autoPositionX), autoPositionY, randomInArray(autoImages));
     screenElement.append(auto);
 
     stage = 0;

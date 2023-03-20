@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Automobile Competition</title>
+    <link rel="stylesheet" type="text/css" href="./index.css">
+</head>
+<body>
+<div class="game">
+    <div class="scores">Scores:&nbsp;<span>0</span></div>
+    <div class="screen">
+        <!-- Demo tiles -->
+        <div class="auto" style="background-image: url(./2-auto.png); top: 0; left: 0;"></div>
+        <div class="auto" style="background-image: url(./2-auto.png); top: 0; left: 100px;"></div>
+        <div class="auto" style="background-image: url(./2-auto.png); top: 0; left: 200px;"></div>
+        <div class="auto" style="background-image: url(./1-pilot.png); top: 450px;left: 0;"></div>
+        <div class="auto" style="background-image: url(./1-pilot.png); top: 450px;left: 100px;"></div>
+        <div class="auto" style="background-image: url(./1-pilot.png); top: 450px;left: 200px;"></div>
+        <div class="line" style="top: 0;"></div>
+        <div class="line" style="top: 120px;"></div>
+        <div class="line" style="top: 240px;"></div>
+        <div class="line" style="top: 360px;"></div>
+        <div class="line" style="top: 480px;"></div>
+        <!-- Demo tiles -->
+    </div>
+    <div class="buttons">
+        <div id="start" class="btn" title="Or press key S">
+            START
+        </div>
+        <div id="pause" class="btn" title="Or press key P">
+            PAUSE
+        </div>
+        <div id="reset" class="btn" title="Or press key R">
+            RESET
+        </div>
+    </div>
+    <div class="paused">
+        <div>
+            PAUSED
+        </div>
+    </div>
+</div>
+<script src="./index.js"></script>
+</body>
+</html>

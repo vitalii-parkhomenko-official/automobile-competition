@@ -7,3 +7,4 @@
 - `part-4` - add move auto to down and remove auto if out of screen
 - `part-5` - add start and reset buttons
 - `part-6` - auto - random img, random position `x`, auto start moving from out of screen
+- `part-7` - autos - random single or double, if double refactor to an array

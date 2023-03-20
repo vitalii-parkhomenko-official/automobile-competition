@@ -8,9 +8,12 @@
   const positionCenter = autoWidth;
   const positionRight = autoWidth + autoWidth;
   const autoPositionX = [
-    positionLeft,
-    positionCenter,
-    positionRight
+    [positionLeft],
+    [positionCenter],
+    [positionRight],
+    [positionLeft, positionCenter],
+    [positionCenter, positionRight],
+    [positionLeft, positionRight]
   ];
   const autoPositionY = -autoHeight;
   const autoImages = [
@@ -35,19 +38,30 @@
 
     return element;
   };
+  const getAutos = () => randomInArray(autoPositionX).map(positionX => createAuto(positionX, autoPositionY, randomInArray(autoImages)));
   let stage = 0;
   let delta = 1;
   let interval = null;
-  let auto = createAuto(randomInArray(autoPositionX), autoPositionY, randomInArray(autoImages));
+  let autos = [];
   let pilot = createAuto(pilotLeft, pilotTop, pilotImage);
 
   const animate = () => {
-    const autoTop = parseFloat(auto.style.top);
+    for (const auto of autos) {
+      const autoTop = parseFloat(auto.style.top);
 
-    if (autoTop >= rect.height) {
-      auto.remove();
-    } else {
-      auto.style.top = `${autoTop + (stage + delta)}px`;
+      if (autoTop >= rect.height) {
+        const index = autos.indexOf(auto);
+
+        auto.remove();
+        autos.splice(index, 1);
+      } else {
+        auto.style.top = `${autoTop + (stage + delta)}px`;
+      }
+    }
+
+    if (!autos.length) {
+      autos = getAutos();
+      autos.forEach(auto => screenElement.append(auto));
     }
   };
   const reset = () => {
@@ -56,9 +70,9 @@
     pilot = createAuto(pilotLeft, pilotTop, pilotImage);
     screenElement.append(pilot);
 
-    auto.remove();
-    auto = createAuto(randomInArray(autoPositionX), autoPositionY, randomInArray(autoImages));
-    screenElement.append(auto);
+    autos.forEach(auto => auto.remove());
+    autos = getAutos();
+    autos.forEach(auto => screenElement.append(auto));
 
     stage = 0;
     interval = null;

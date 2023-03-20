@@ -2,6 +2,7 @@
   const screenElement = document.querySelector(".screen");
   const scoresElement = document.querySelector(".scores > span");
   const buttonElement = document.querySelector(".buttons");
+  const pauseElement = document.querySelector(".paused");
   const rect = screenElement.getBoundingClientRect();
   const autoWidth = rect.width / 3;
   const autoHeight = rect.height / 4;
@@ -61,6 +62,7 @@
   let autos = [];
   let lines = [];
   let pilot = createAuto(pilotLeft, pilotTop, pilotImage);
+  let started = false;
 
   const animateAutos = () => {
     for (const auto of autos) {
@@ -119,11 +121,28 @@
 
     stage = 0;
     interval = null;
+    started = false;
 
     scoresElement.innerHTML = '0';
+    pauseElement.style.display = "none";
   };
   const start = () => {
+    started = true;
     interval = setInterval(animate, 10);
+  };
+  const pause = () => {
+    if (!started) {
+      return;
+    }
+
+    if (interval) {
+      clearInterval(interval);
+      interval = null;
+      pauseElement.style.display = "block";
+    } else {
+      pauseElement.style.display = "none";
+      start();
+    }
   };
   const handleKeydown = (event) => {
     const left = parseFloat(pilot.style.left);
@@ -139,6 +158,19 @@
     if (event.key === "ArrowUp") {
       delta = 10;
     }
+
+    if (event.key.toLowerCase() === "s") {
+      reset();
+      start();
+    }
+
+    if (event.key.toLowerCase() === "p") {
+      pause();
+    }
+
+    if (event.key.toLowerCase() === "r") {
+      reset();
+    }
   };
   const handleKeyup = (event) => {
     if (event.key === "ArrowUp") {
@@ -149,6 +181,10 @@
     if (event.target.id === "start") {
       reset();
       start();
+    }
+
+    if (event.target.id === "pause") {
+      pause();
     }
 
     if (event.target.id === "reset") {

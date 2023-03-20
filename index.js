@@ -6,20 +6,27 @@
   const positionLeft = 0;
   const positionCenter = autoWidth;
   const positionRight = autoWidth + autoWidth;
+  const autoPositionX = positionLeft; // positionCenter, positionRight
+  const autoPositionY = 0;
+  const autoImage = "./2-auto.png";
   const pilotLeft = positionCenter;
   const pilotTop = rect.height - autoHeight;
   const pilotImage = "./1-pilot.png";
-  const createAuto = (left, top, img) => {
-    const element = document.createElement("div");
 
-    element.style.top = `${top}px`;
-    element.style.left = `${left}px`;
-    element.style.backgroundImage = `url(${img})`;
-    element.setAttribute("class", "auto");
+  const pilot = document.createElement("div");
 
-    return element;
-  };
-  let pilot = createAuto(pilotLeft, pilotTop, pilotImage);
+  pilot.style.top = `${pilotTop}px`;
+  pilot.style.left = `${pilotLeft}px`;
+  pilot.style.backgroundImage = `url(${pilotImage})`;
+  pilot.setAttribute("class", "auto");
+
+  const auto = document.createElement("div");
+
+  auto.style.top = `${autoPositionY}px`;
+  auto.style.left = `${autoPositionX}px`;
+  auto.style.backgroundImage = `url(${autoImage})`;
+  auto.setAttribute("class", "auto");
 
   screenElement.append(pilot);
+  screenElement.append(auto);
 }

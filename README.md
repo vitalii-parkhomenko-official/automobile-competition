@@ -12,3 +12,4 @@
 - `part-9` - collide and game over
 - `part-10` - lines on road
 - `part-11` - acceleration
+- `part-12` - pause game

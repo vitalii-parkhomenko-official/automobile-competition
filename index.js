@@ -46,7 +46,7 @@
     return element;
   };
   const getAutos = () => randomInArray(autoPositionX).map(positionX => createAuto(positionX, randomInArray(autoPositionsY), randomInArray(autoImages)));
-  let stage = 0;
+  let stage = 5;
   let delta = 1;
   let interval = null;
   let autos = [];
@@ -55,17 +55,25 @@
   const animate = () => {
     for (const auto of autos) {
       const autoTop = parseFloat(auto.style.top);
+      const autoBottom = autoTop + autoHeight;
 
-      if (autoTop >= rect.height) {
-        scoresElement.innerHTML = (parseInt(scoresElement.innerHTML, 10) + 100).toString();
-        stage += 0.0005;
+      if (parseFloat(pilot.style.top) <= autoBottom && parseFloat(pilot.style.left) === parseFloat(auto.style.left)) {
+        const message = `Game over!\nYou scores ${scoresElement.innerHTML}!`;
 
-        const index = autos.indexOf(auto);
-
-        auto.remove();
-        autos.splice(index, 1);
+        reset();
+        alert(message);
       } else {
-        auto.style.top = `${autoTop + (stage + delta)}px`;
+        if (autoTop >= rect.height) {
+          scoresElement.innerHTML = (parseInt(scoresElement.innerHTML, 10) + 100).toString();
+          stage += 0.0005;
+
+          const index = autos.indexOf(auto);
+
+          auto.remove();
+          autos.splice(index, 1);
+        } else {
+          auto.style.top = `${autoTop + (stage + delta)}px`;
+        }
       }
     }
 

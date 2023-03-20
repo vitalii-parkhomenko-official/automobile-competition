@@ -22,12 +22,26 @@
 
     return element;
   };
+  let stage = 0;
+  let delta = 1;
 
   const pilot = createAuto(pilotLeft, pilotTop, pilotImage);
   const auto = createAuto(autoPositionX, autoPositionY, autoImage);
 
   screenElement.append(pilot);
   screenElement.append(auto);
+
+  const animateAuto = () => {
+    const autoTop = parseFloat(auto.style.top);
+
+    if (autoTop >= rect.height) {
+      auto.remove();
+    } else {
+      auto.style.top = `${autoTop + (stage + delta)}px`;
+    }
+  };
+
+  setInterval(animateAuto, 10);
 
   const handleKeydown = (event) => {
     const left = parseFloat(pilot.style.left);

@@ -11,3 +11,4 @@
 - `part-8` - increment scores, increment stage, auto random position `y`
 - `part-9` - collide and game over
 - `part-10` - lines on road
+- `part-11` - acceleration

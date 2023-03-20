@@ -34,6 +34,7 @@
   const pilotLeft = positionCenter;
   const pilotTop = rect.height - autoHeight;
   const pilotImage = "./1-pilot.png";
+  const linePositionMargin = rect.height / 5;
   const randomInArray = (array) => array[Math.floor(Math.random() * array.length)];
   const createAuto = (left, top, img) => {
     const element = document.createElement("div");
@@ -45,14 +46,23 @@
 
     return element;
   };
+  const createLine = (top) => {
+    const element = document.createElement("div");
+    element.style.top = `${top}px`;
+    element.setAttribute("class", "line");
+
+    return element;
+  };
   const getAutos = () => randomInArray(autoPositionX).map(positionX => createAuto(positionX, randomInArray(autoPositionsY), randomInArray(autoImages)));
+  const getLines = () => Array.from({ length: 6 }, (_, index) => createLine(linePositionMargin * (--index)));
   let stage = 5;
   let delta = 1;
   let interval = null;
   let autos = [];
+  let lines = [];
   let pilot = createAuto(pilotLeft, pilotTop, pilotImage);
 
-  const animate = () => {
+  const animateAutos = () => {
     for (const auto of autos) {
       const autoTop = parseFloat(auto.style.top);
       const autoBottom = autoTop + autoHeight;
@@ -82,6 +92,17 @@
       autos.forEach(auto => screenElement.append(auto));
     }
   };
+  const animateLines = () => {
+    for (const line of lines) {
+      const lineTop = parseFloat(line.style.top) + stage + (delta + 2);
+
+      line.style.top = lineTop >= rect.height ? `${-linePositionMargin}px` : `${lineTop}px`;
+    }
+  };
+  const animate = () => {
+    animateAutos();
+    animateLines();
+  };
   const reset = () => {
     clearInterval(interval);
     pilot.remove();
@@ -91,6 +112,10 @@
     autos.forEach(auto => auto.remove());
     autos = getAutos();
     autos.forEach(auto => screenElement.append(auto));
+
+    lines.forEach(line => line.remove());
+    lines = getLines();
+    lines.forEach(line => screenElement.append(line));
 
     stage = 0;
     interval = null;

@@ -10,3 +10,4 @@
 - `part-7` - autos - random single or double, if double refactor to an array
 - `part-8` - increment scores, increment stage, auto random position `y`
 - `part-9` - collide and game over
+- `part-10` - lines on road
